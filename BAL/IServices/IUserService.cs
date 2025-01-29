@@ -1,17 +1,29 @@
+using MyApp.DAL.Entity;
 using MyApp.DAL.Entity.DTO;
-
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace MyApp.BAL.IServices
 {
     public interface IUserService
     {
-        public Task<ICollection<UserDTO>> GetAllActiveUser(bool isactive);
-        public  Task<ICollection<UserDTO>> GetUserById(int id);
-        public Task<ICollection<UserDTO>> GetAllUser();
-        public Task<bool> UpdateUser(UserDTO user);
-        public Task<bool> AddUser(UserDTO user);
-        
-        public Task<bool> DeleteUser(int id);
-        public Task<bool> SoftDeleteUser(int id);
+        // Get all users
+        Task<ICollection<UserDTO>> GetAllUsersAsync();
+
+        // Add a new user
+        Task<User> AddUser(UserDTO userDTO);
+
+        // Update an existing user
+        Task<bool> UpdateUser(UserDTO userDTO);
+
+        // Delete a user
+        Task<bool> DeleteUser(int id);
+
+        // Get a user by condition
+        Task<UserDTO> GetUserByConditionAsync(Expression<Func<User, bool>> condition);
+
+        // Authenticate user (Login)
     }
 }

@@ -1,3 +1,11 @@
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.csproj.AssemblyReference.cache
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.AssemblyInfoInputs.cache
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.AssemblyInfo.cs
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.csproj.CoreCompileInputs.cache
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.MvcApplicationPartsAssemblyInfo.cs
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.MvcApplicationPartsAssemblyInfo.cache
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.sourcelink.json
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\appsettings.Development.json
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\appsettings.json
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\MyApp.staticwebassets.endpoints.json
@@ -6,6 +14,8 @@ C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\MyApp.deps.js
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\MyApp.runtimeconfig.json
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\MyApp.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\MyApp.pdb
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\AutoMapper.dll
+C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\Humanizer.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -96,13 +106,6 @@ C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\ru\Microsoft.
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.csproj.AssemblyReference.cache
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.GeneratedMSBuildEditorConfig.editorconfig
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.AssemblyInfoInputs.cache
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.AssemblyInfo.cs
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.csproj.CoreCompileInputs.cache
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.MvcApplicationPartsAssemblyInfo.cs
-C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\MyApp.MvcApplicationPartsAssemblyInfo.cache
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\scopedcss\bundle\MyApp.styles.css
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\staticwebassets.build.json
 C:\webdev\Typescript\Asp.net\Assignment.Net\MyApp\obj\Debug\net9.0\staticwebassets.development.json

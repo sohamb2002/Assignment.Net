@@ -7,44 +7,55 @@ namespace MyApp.DAL.Repository
 {
     public abstract class Repository<T, Tcontext> : IRepository<T> where T : class where Tcontext : DbContext
     {
-        protected readonly Tcontext EMDBContext = null;
+        protected readonly Tcontext EMDBContext;
 
         public Repository(Tcontext context)
         {
-            this.EMDBContext = context;
+            EMDBContext = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // Synchronous methods
-        public bool Add(T entity)
+        public T Add(T entity)
         {
             this.EMDBContext.Set<T>().Add(entity);
-            SaveChangesManaged(); // To persist changes
-            return true;
+            EMDBContext.SaveChanges(); // Synchronous
+            return entity;
         }
 
         public bool Update(T entity)
         {
             this.EMDBContext.Entry(entity).State = EntityState.Modified;
-            SaveChangesManaged(); // To persist changes
+            EMDBContext.SaveChanges(); // Synchronous
             return true;
         }
 
         public bool Delete(T entity)
         {
             this.EMDBContext.Set<T>().Remove(entity);
-            SaveChangesManaged(); // To persist changes
+            EMDBContext.SaveChanges(); // Synchronous
             return true;
         }
 
-        public void SaveChangesManaged()
+        // Asynchronous methods
+        public async Task<T> AddAsync(T entity)
         {
-            this.EMDBContext.SaveChanges();
+            await  this.EMDBContext.Set<T>().AddAsync(entity);
+            await EMDBContext.SaveChangesAsync(); // Async
+            return entity;
         }
 
-        // Asynchronous methods
-        public async Task<ICollection<T>> GetAllByConditionAsync(Expression<Func<T, bool>> condition)
+        public async Task<bool> UpdateAsync(T entity)
         {
-            return await EMDBContext.Set<T>().Where(condition).ToListAsync();
+            this.EMDBContext.Entry(entity).State = EntityState.Modified;
+            await EMDBContext.SaveChangesAsync(); // Async
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(T entity)
+        {
+            this.EMDBContext.Set<T>().Remove(entity);
+            await EMDBContext.SaveChangesAsync(); // Async
+            return true;
         }
 
         public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> condition)
@@ -56,6 +67,10 @@ namespace MyApp.DAL.Repository
         {
             return await EMDBContext.Set<T>().FirstOrDefaultAsync(condition);
         }
+public async Task<ICollection<T>> GetAllByConditionAsync(Expression<Func<T, bool>> condition)
+{
+    return await EMDBContext.Set<T>().Where(condition).ToListAsync() as ICollection<T>;
+}
 
         public async Task<List<T>> GetMultipleAsync(Expression<Func<T, bool>> condition)
         {
@@ -73,21 +88,16 @@ namespace MyApp.DAL.Repository
             return EMDBContext.Set<T>().FirstOrDefault(condition);
         }
 
-        public List<T> GetMultiple(Expression<Func<T, bool>> condition)
-        {
-            return EMDBContext.Set<T>().Where(condition).ToList();
-        }
-
-        // To handle DB retries (optional)
+        // DB Execution Strategy
         public IExecutionStrategy GetExecutionStrategy()
         {
             return this.EMDBContext.Database.CreateExecutionStrategy();
         }
 
-        // Save changes asynchronously (future implementation, might not be used)
-        public Task SaveChangesAsync()
+        // Save Changes
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await EMDBContext.SaveChangesAsync();
         }
     }
 }
