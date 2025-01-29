@@ -23,7 +23,4 @@ public partial class User
 
     [Column("is_active")]
     public bool? IsActive { get; set; }
-
-    [InverseProperty("CreatedByNavigation")]
-    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 }

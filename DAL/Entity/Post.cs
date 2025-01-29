@@ -31,8 +31,4 @@ public partial class Post
 
     [Column("is_published")]
     public bool? IsPublished { get; set; }
-
-    [ForeignKey("CreatedBy")]
-    [InverseProperty("Posts")]
-    public virtual User? CreatedByNavigation { get; set; }
 }

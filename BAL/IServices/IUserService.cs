@@ -12,11 +12,13 @@ namespace MyApp.BAL.IServices
         // Get all users
         Task<ICollection<UserDTO>> GetAllUsersAsync();
 
+ Task<User> UpdateUser(int id, UserDTO user);
+    Task<User> GetUserById(int id);
         // Add a new user
         Task<User> AddUser(UserDTO userDTO);
 
         // Update an existing user
-        Task<bool> UpdateUser(UserDTO userDTO);
+        // Task<User> UpdateUser(UserDTO userDTO);
 
         // Delete a user
         Task<bool> DeleteUser(int id);

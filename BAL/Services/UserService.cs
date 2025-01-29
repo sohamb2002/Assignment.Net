@@ -44,24 +44,39 @@ public async Task<User> AddUser(UserDTO user)
         return addedUser; // Return the created user
     }
     catch (Exception ex)
-    {
-        // Log error
-        throw new Exception("An error occurred while adding the user.", ex);
-    }
+{
+    Console.WriteLine($"Error: {ex.Message} | Inner: {ex.InnerException?.Message}");
+    throw new Exception("An error occurred while adding the user.", ex);
+}
+
 }
 
 
 
 
-        public async Task<bool> UpdateUser(UserDTO userDTO)
-        {
-            if (userDTO == null) throw new ArgumentNullException(nameof(userDTO));
+        public async Task<User> GetUserById(int id)
+    {
+        return await _userRepo.GetByIdAsync(id);
+    }
 
-            var user = _mapper.Map<User>(userDTO);
-            _userRepo.Update(user);
-            await _userRepo.SaveChangesAsync();
-            return true;
+    public async Task<User> UpdateUser(int id, UserDTO user)
+    {
+        var existingUser = await _userRepo.GetByIdAsync(id);
+        if (existingUser == null)
+        {
+            return null; // User not found
         }
+
+        // Only update the fields passed in the UserDTO
+        existingUser.Name = user.Name ?? existingUser.Name;
+        existingUser.Password = user.Password ?? existingUser.Password;
+        existingUser.IsActive = user.IsActive ?? existingUser.IsActive;
+
+        // Save changes to the database
+        await _userRepo.UpdateAsync(existingUser);
+        return existingUser;
+    }
+
 
         public async Task<bool> DeleteUser(int id)
         {

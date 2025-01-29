@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using MyApp.DAL.Entity;
 using MyApp.DAL.Interfaces;
 
 namespace MyApp.DAL.Repository
@@ -40,15 +41,19 @@ namespace MyApp.DAL.Repository
         public async Task<T> AddAsync(T entity)
         {
             await  this.EMDBContext.Set<T>().AddAsync(entity);
-            await EMDBContext.SaveChangesAsync(); // Async
+            if(entity!=null)
+            {
+                 await EMDBContext.SaveChangesAsync();
+            }
+            // Async
             return entity;
         }
 
-        public async Task<bool> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             this.EMDBContext.Entry(entity).State = EntityState.Modified;
             await EMDBContext.SaveChangesAsync(); // Async
-            return true;
+            return entity;
         }
 
         public async Task<bool> DeleteAsync(T entity)
@@ -62,6 +67,12 @@ namespace MyApp.DAL.Repository
         {
             return await EMDBContext.Set<T>().Where(condition).ToListAsync();
         }
+
+    public async Task<User> GetByIdAsync(int id)
+{
+    
+    return await EMDBContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
+}
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> condition)
         {

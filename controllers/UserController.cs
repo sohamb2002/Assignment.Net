@@ -54,6 +54,7 @@ public async Task<ApiResponse<User>> CreateUser([FromBody] UserDTO user)
 
     try
     {
+
         // Validate the user input
         if (!ModelState.IsValid)
         {
@@ -89,6 +90,85 @@ public async Task<ApiResponse<User>> CreateUser([FromBody] UserDTO user)
 
     return response;
 }
+    
+
+[HttpPut("UpdateUser/{id}")]
+public async Task<ApiResponse<User>> UpdateUser([FromRoute] int id, [FromBody] UserDTO user)
+{
+    var response = new ApiResponse<User>();
+
+    try
+    {
+        // Validate the user input
+        if (!ModelState.IsValid)
+        {
+            response.StatusCode = 400;
+            response.Message = "Invalid user data.";
+            response.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return response;
+        }
+
+        // Fetch the user by ID and update
+        var updatedUser = await _uservice.UpdateUser(id, user);
+
+        if (updatedUser == null)
+        {
+            response.StatusCode = 404;
+            response.Message = "User not found.";
+            return response;
+        }
+
+        response.Data = updatedUser;
+        response.StatusCode = 200;  // Updated status code for success
+        response.Message = "User updated successfully.";
+        response.Success = true;
+    }
+    catch (Exception ex)
+    {
+        // Log the exception
+        response.StatusCode = 500; // Internal Server Error
+        response.Message = "An error occurred while updating the user.";
+        response.Success = false;
+        response.Errors = new List<string> { ex.Message };
+    }
+
+    return response;
+}
+    
+
+[HttpDelete("DeleteUser/{id}")]
+public async Task<ApiResponse<User>> DeleteUser([FromRoute] int id)
+{
+    var response = new ApiResponse<User>();
+    try
+    {
+        bool isDeleted = await _uservice.DeleteUser(id);
+        
+        if (isDeleted)
+        {
+            response.StatusCode = 200;
+            response.Message = "User deleted successfully.";
+            response.Success = true;
+        }
+        else
+        {
+            response.StatusCode = 404; // Not Found
+            response.Message = "User not found or could not be deleted.";
+            response.Success = false;
+        }
+    }
+    catch (Exception ex)
+    {
+        response.StatusCode = 500;
+        response.Message = "An error occurred while deleting the user.";
+        response.Success = false;
+        throw new Exception(ex.ToString());
+    }
+    
+    return response; // Ensure response is returned in all cases
+}
+
+
     }
 namespace MyApp
 {

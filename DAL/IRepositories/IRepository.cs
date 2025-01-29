@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage;
+using MyApp.DAL.Entity;
 using System.Linq.Expressions;
 
 namespace MyApp.DAL.Interfaces
@@ -12,6 +13,8 @@ namespace MyApp.DAL.Interfaces
         bool Update(T entity);
         bool Delete(T entity);
 Task<T> AddAsync(T entity);
+Task<User> GetByIdAsync(int id);
+Task<T> UpdateAsync(T entity);
         // Asynchronous methods
         Task<ICollection<T>> GetAllByConditionAsync(Expression<Func<T, bool>> condition);
         Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> condition);

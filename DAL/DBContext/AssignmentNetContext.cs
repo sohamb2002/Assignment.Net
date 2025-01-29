@@ -31,15 +31,12 @@ public partial class AssignmentNetContext : DbContext
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.IsPublished).HasDefaultValue(true);
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Posts).HasConstraintName("posts_created_by_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("users_pkey");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 

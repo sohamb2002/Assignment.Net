@@ -20,9 +20,27 @@ namespace MyApp.DAL.Entity.DTO
         // IsActive flag, optional, can be null
         public bool? IsActive { get; set; }
 
-        public static implicit operator UserDTO(bool v)
+        // Conversion methods (optional) to map between UserDTO and User
+        public static User ToEntity(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            return new User
+            {
+                Id = userDTO.Id,
+                Name = userDTO.Name,
+                Password = userDTO.Password,
+                IsActive = userDTO.IsActive
+            };
+        }
+
+        public static UserDTO FromEntity(User user)
+        {
+            return new UserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Password = user.Password,
+                IsActive = user.IsActive
+            };
         }
     }
 }
