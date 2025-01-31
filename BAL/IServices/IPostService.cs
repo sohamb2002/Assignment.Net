@@ -9,20 +9,19 @@ namespace MyApp.BAL.IServices
 {
     public interface IPostService
     {
-        // Get all posts that match the published status
-        Task<ICollection<PostDTO>> GetAllPublishedPosts(bool isPublished);
+        // Get all posts
+        Task<ICollection<PostDTO>> GetAllPosts();
 
         // Add a new post
-        Task<bool> AddPost(PostDTO postDTO);
+        Task<Post> AddPost(PostDTO postDTO);
 
         // Update an existing post
-        Task<bool> UpdatePost(PostDTO postDTO);
+         Task<Post> UpdatePost(int id, PostDTO post);
 
         // Delete a post
         Task<bool> DeletePost(int id);
 
-        // Get a post by condition
-         
-        Task<PostDTO> GetPostByConditionAsync(Expression<Func<Post, bool>> condition);
+        // Get posts by condition (using an expression, e.g., category filter)
+        Task<ICollection<PostDTO>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition);
     }
 }

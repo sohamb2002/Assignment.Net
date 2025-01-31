@@ -12,8 +12,11 @@ namespace MyApp.DAL.Interfaces
         T Add(T entity);
         bool Update(T entity);
         bool Delete(T entity);
+        bool SoftDelete(T entity);
 Task<T> AddAsync(T entity);
-Task<User> GetByIdAsync(int id);
+Task<T> GetByIdAsync(int id);
+Task<Post> GetByPostId(int id);
+Task<Category> GetByCategoryId(int id);
 Task<T> UpdateAsync(T entity);
         // Asynchronous methods
         Task<ICollection<T>> GetAllByConditionAsync(Expression<Func<T, bool>> condition);

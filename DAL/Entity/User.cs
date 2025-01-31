@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MyApp.DAL.Entity;
 
 [Table("users")]
+[Index("Email", Name = "users_email_key", IsUnique = true)]
 public partial class User
 {
     [Key]
@@ -17,8 +18,19 @@ public partial class User
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
-    [Column("password")]
+    [Column("email")]
     [StringLength(50)]
+    public string Email { get; set; } = null!;
+
+    [Column("phone")]
+    [StringLength(15)]
+    public string? Phone { get; set; }
+
+    [Column("created_at", TypeName = "timestamp without time zone")]
+    public DateTime? CreatedAt { get; set; }
+
+    [Column("password")]
+    [StringLength(255)]
     public string Password { get; set; } = null!;
 
     [Column("is_active")]

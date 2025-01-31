@@ -22,5 +22,10 @@ namespace MyApp.DAL.Repositories
         {
             return await _context.Users.ToListAsync();
         }
+//             public async Task<User> GetByIdAsync(int id)
+// {
+    
+//     return await EMDBContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
+// }
     }
 }

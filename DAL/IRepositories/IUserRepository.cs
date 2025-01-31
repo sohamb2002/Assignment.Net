@@ -8,6 +8,7 @@ namespace MyApp.DAL.IRepositories
     public interface IUserRepository : IRepository<User>
     {
         Task<ICollection<User>> GetAllAsync();
+        Task<User> GetByIdAsync(int id);
     }
     
 }

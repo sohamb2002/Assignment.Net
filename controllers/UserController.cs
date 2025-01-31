@@ -136,7 +136,7 @@ public async Task<ApiResponse<User>> UpdateUser([FromRoute] int id, [FromBody] U
 }
     
 
-[HttpDelete("DeleteUser/{id}")]
+[HttpPut("DeleteUser/{id}")]
 public async Task<ApiResponse<User>> DeleteUser([FromRoute] int id)
 {
     var response = new ApiResponse<User>();

@@ -16,6 +16,8 @@ public partial class AssignmentNetContext : DbContext
     {
     }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Post> Posts { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -25,6 +27,11 @@ public partial class AssignmentNetContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("category_pkey");
+        });
+
         modelBuilder.Entity<Post>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("posts_pkey");
@@ -37,6 +44,7 @@ public partial class AssignmentNetContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("users_pkey");
 
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 

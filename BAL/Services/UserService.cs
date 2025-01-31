@@ -1,5 +1,6 @@
 using MyApp.DAL.Entity;
-using MyApp.DAL.Entity.DTO;
+
+
 using MyApp.DAL.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using MyApp.BAL.IServices;
+using MyApp.DAL.Entity.DTO;
 
 namespace MyApp.BAL.Services
 {
@@ -36,6 +38,8 @@ public async Task<User> AddUser(UserDTO user)
         {
             Name = user.Name,
             Password = user.Password,
+            Email = user.Email,
+            Phone = user.Phone,
             IsActive = user.IsActive
         };
 
@@ -70,7 +74,10 @@ public async Task<User> AddUser(UserDTO user)
         // Only update the fields passed in the UserDTO
         existingUser.Name = user.Name ?? existingUser.Name;
         existingUser.Password = user.Password ?? existingUser.Password;
+        existingUser.Email = user.Email?? existingUser.Email;
+        existingUser.Phone = user.Phone?? existingUser.Phone;
         existingUser.IsActive = user.IsActive ?? existingUser.IsActive;
+        existingUser.CreatedAt = user.CreatedAt ?? existingUser.CreatedAt;
 
         // Save changes to the database
         await _userRepo.UpdateAsync(existingUser);
@@ -82,8 +89,8 @@ public async Task<User> AddUser(UserDTO user)
         {
             var user = await _userRepo.GetSingleAsync(u => u.Id == id);
             if (user == null) return false;
-
-            _userRepo.Delete(user);
+user.IsActive=false;
+            _userRepo.SoftDelete(user);
             await _userRepo.SaveChangesAsync();
             return true;
         }

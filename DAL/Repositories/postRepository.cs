@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MyApp.DAL.DBContext;
 using MyApp.DAL.Entity;
@@ -32,6 +33,18 @@ public class PostRepository : Repository<Post, AssignmentNetContext>, IPostRepos
 
     //     return post;
     // }
-
+  public async Task<ICollection<Post>> GetAllAsync()
+        {
+            return await _context.Posts.ToListAsync();
+        }
+  public async Task<ICollection<Post>> GetListAsync(Expression<Func<Post, bool>> condition)
+        {
+            return await _context.Posts.Where(condition).ToListAsync();
+        }
+//                     public async Task<Post> GetByIdAsync(int id)
+// {
+    
+//     return await EMDBContext.Set<Post>().FirstOrDefaultAsync(u => u.Id == id);
+// }
 
 }

@@ -29,14 +29,23 @@ namespace MyApp.DAL.Repository
             EMDBContext.SaveChanges(); // Synchronous
             return true;
         }
-
+     public async Task<Post> GetByPostId(int id)
+{
+    
+    return await EMDBContext.Set<Post>().FirstOrDefaultAsync(u => u.Id == id);
+}
         public bool Delete(T entity)
         {
             this.EMDBContext.Set<T>().Remove(entity);
             EMDBContext.SaveChanges(); // Synchronous
             return true;
         }
-
+        public bool SoftDelete(T entity)
+        {
+            this.EMDBContext.Entry(entity).State = EntityState.Modified;
+                    EMDBContext.SaveChanges(); 
+                    return true;
+        }
         // Asynchronous methods
         public async Task<T> AddAsync(T entity)
         {
@@ -68,10 +77,15 @@ namespace MyApp.DAL.Repository
             return await EMDBContext.Set<T>().Where(condition).ToListAsync();
         }
 
-    public async Task<User> GetByIdAsync(int id)
+    public async Task<T> GetByIdAsync(int id)
 {
     
-    return await EMDBContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
+    return await EMDBContext.Set<T>().FirstOrDefaultAsync(id => id.Equals(id));
+}
+    public async Task<Category> GetByCategoryId(int id)
+{
+    
+    return await EMDBContext.Set<Category>().FirstOrDefaultAsync(u => u.Id == id);
 }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> condition)
