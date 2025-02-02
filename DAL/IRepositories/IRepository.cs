@@ -15,8 +15,8 @@ namespace MyApp.DAL.Interfaces
         bool SoftDelete(T entity);
 Task<T> AddAsync(T entity);
 Task<T> GetByIdAsync(int id);
-Task<Post> GetByPostId(int id);
-Task<Category> GetByCategoryId(int id);
+// Task<Post> GetByPostId(int id);
+// Task<Category> GetByCategoryId(int id);
 Task<T> UpdateAsync(T entity);
         // Asynchronous methods
         Task<ICollection<T>> GetAllByConditionAsync(Expression<Func<T, bool>> condition);

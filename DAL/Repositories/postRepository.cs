@@ -37,10 +37,10 @@ public class PostRepository : Repository<Post, AssignmentNetContext>, IPostRepos
         {
             return await _context.Posts.ToListAsync();
         }
-  public async Task<ICollection<Post>> GetListAsync(Expression<Func<Post, bool>> condition)
-        {
-            return await _context.Posts.Where(condition).ToListAsync();
-        }
+//   public async Task<ICollection<Post>> GetAllByConditionAsync(Expression<Func<Post, bool>> condition)
+//         {
+//             return await _context.Posts.Where(condition).ToListAsync();
+//         }
 //                     public async Task<Post> GetByIdAsync(int id)
 // {
     

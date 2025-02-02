@@ -93,7 +93,7 @@ public async Task<ApiResponse<User>> CreateUser([FromBody] UserDTO user)
     
 
 [HttpPut("UpdateUser/{id}")]
-public async Task<ApiResponse<User>> UpdateUser([FromRoute] int id, [FromBody] UserDTO user)
+public async Task<ApiResponse<User>> UpdateUser([FromRoute] int id, [FromBody] UpdateUserDTO user)
 {
     var response = new ApiResponse<User>();
 

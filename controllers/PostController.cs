@@ -81,7 +81,7 @@ namespace MyApp.Controllers
             return response;
         }
 [HttpPut("EditPost/{id}")]
-public async Task<ApiResponse<Post>> UpdatePost([FromRoute] int id, [FromBody] PostDTO post)
+public async Task<ApiResponse<Post>> UpdatePost([FromRoute] int id, [FromBody] EditPostDTO post)
 {
     var response = new ApiResponse<Post>();
 

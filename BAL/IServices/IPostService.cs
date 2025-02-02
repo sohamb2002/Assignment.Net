@@ -16,7 +16,7 @@ namespace MyApp.BAL.IServices
         Task<Post> AddPost(PostDTO postDTO);
 
         // Update an existing post
-         Task<Post> UpdatePost(int id, PostDTO post);
+         Task<Post> UpdatePost(int id, EditPostDTO post);
 
         // Delete a post
         Task<bool> DeletePost(int id);

@@ -31,7 +31,7 @@ namespace MyApp
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IPostService, PostService>();
             builder.Services.AddTransient<IPostRepository, PostRepository>();
-            builder.Services.AddTransient<ICategoryService, CategoryService>();
+            // builder.Services.AddTransient<ICategoryService, CategoryService>();
             builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             // Add Controllers

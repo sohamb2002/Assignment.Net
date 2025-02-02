@@ -63,26 +63,38 @@ public async Task<User> AddUser(UserDTO user)
         return await _userRepo.GetByIdAsync(id);
     }
 
-    public async Task<User> UpdateUser(int id, UserDTO user)
+public async Task<User> UpdateUser(int id, UpdateUserDTO user)
+{
+    // Fetch the user from the database
+    var existingUser = await _userRepo.GetSingleAsync(u => u.Id == id);;
+
+    if (existingUser == null)
     {
-        var existingUser = await _userRepo.GetByIdAsync(id);
-        if (existingUser == null)
-        {
-            return null; // User not found
-        }
-
-        // Only update the fields passed in the UserDTO
-        existingUser.Name = user.Name ?? existingUser.Name;
-        existingUser.Password = user.Password ?? existingUser.Password;
-        existingUser.Email = user.Email?? existingUser.Email;
-        existingUser.Phone = user.Phone?? existingUser.Phone;
-        existingUser.IsActive = user.IsActive ?? existingUser.IsActive;
-        existingUser.CreatedAt = user.CreatedAt ?? existingUser.CreatedAt;
-
-        // Save changes to the database
-        await _userRepo.UpdateAsync(existingUser);
-        return existingUser;
+        return null; // User not found
     }
+
+    // Check if the new email is already taken by another user
+    if (!string.IsNullOrEmpty(user.Email) && user.Email != existingUser.Email)
+    {
+        var emailExists = await _userRepo.GetSingleAsync(u => u.Email == user.Email); // Compare with the new email
+        if (emailExists != null)
+        {
+            return null; // Email is already in use
+        }
+    }
+
+    // Only update the fields passed in the UserDTO
+    existingUser.Name = user.Name ?? existingUser.Name;
+    existingUser.Password = user.Password ?? existingUser.Password;
+    existingUser.Email = user.Email ?? existingUser.Email;
+    existingUser.Phone = user.Phone ?? existingUser.Phone;
+
+    // Save changes to the database
+    await _userRepo.UpdateAsync(existingUser);
+
+    return existingUser;
+}
+
 
 
         public async Task<bool> DeleteUser(int id)

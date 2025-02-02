@@ -8,7 +8,7 @@ namespace MyApp.DAL.IRepositories
     public interface IPostRepository : IRepository<Post>
     {
         Task<ICollection<Post>> GetAllAsync(); // Correct method signature
-        Task<ICollection<Post>> GetListAsync(Expression<Func<Post, bool>> condition); // Correct method signature
-        Task<Post> GetByIdAsync(int id);
+        // Task<ICollection<Post>> GetAllByConditionAsync(Expression<Func<Post, bool>> condition); // Correct method signature
+        // Task<Post> GetByIdAsync(int id);
     }
 }
