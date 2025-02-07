@@ -80,8 +80,42 @@ namespace MyApp.Controllers
 
             return response;
         }
+
+ [HttpGet("FetchOnePost/{id}")]
+        public async Task<ApiResponse<Post>> GetPostById(int id)
+        {
+            var response = new ApiResponse<Post>();
+            try
+            {
+                // Fetch posts by category condition
+                var post = await _postService.GetPostById(id);
+
+                if (post == null )
+                {
+                    response.StatusCode = 404; // Not Found
+                    response.Message = "No posts found for the given category.";
+                    response.Success = false;
+                    return response;
+                }
+
+                response.Data = post;
+                response.StatusCode = 200; // OK
+                response.Message = "Post fetched successfully.";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = 500; // Internal Server Error
+                response.Message = "An error occurred while fetching post.";
+                response.Success = false;
+                response.Errors = new List<string> { ex.Message };
+            }
+
+            return response;
+        }
+
 [HttpPut("EditPost/{id}")]
-public async Task<ApiResponse<Post>> UpdatePost([FromRoute] int id, [FromBody] EditPostDTO post)
+public async Task<ApiResponse<Post>> UpdatePost( [FromRoute]int id, [FromBody] EditPostDTO post)
 {
     var response = new ApiResponse<Post>();
 

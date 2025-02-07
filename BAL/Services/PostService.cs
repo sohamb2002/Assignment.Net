@@ -26,7 +26,15 @@ namespace MyApp.BAL.Services
             var posts = await _postRepo.GetAllAsync();
             return _mapper.Map<ICollection<PostDTO>>(posts);
         }
+     public async Task<Post> GetPostById(int id)
+    {
+         Console.WriteLine($"Fetching post with ID: {id}");
+    var post = await _postRepo.GetSingleAsync(u => u.Id == id);
 
+    return post;
+        // return await _userRepo.GetByIdAsync(id);
+    }
+    
         // Add a new post
         public async Task<Post> AddPost(PostDTO postDTO)
         {
@@ -51,7 +59,10 @@ namespace MyApp.BAL.Services
         // Update an existing post
         public async Task<Post> UpdatePost(int id, EditPostDTO postDto)
 {
-    var existingPost = await _postRepo.GetByIdAsync(id);
+    
+    Console.WriteLine(postDto.Id);
+    
+    var existingPost = await _postRepo.GetSingleAsync(a=>a.Id==id);
 
     if (existingPost == null)
     {

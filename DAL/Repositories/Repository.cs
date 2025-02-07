@@ -71,7 +71,10 @@ namespace MyApp.DAL.Repository
             await EMDBContext.SaveChangesAsync(); // Async
             return true;
         }
-
+     public async  Task<ICollection<T>> GetAllWithoutCondition()
+     {
+        return await EMDBContext.Set<T>().ToListAsync();
+     }
         public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> condition)
         {
             return await EMDBContext.Set<T>().Where(condition).ToListAsync();

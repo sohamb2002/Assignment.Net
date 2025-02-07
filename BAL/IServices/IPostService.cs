@@ -20,7 +20,7 @@ namespace MyApp.BAL.IServices
 
         // Delete a post
         Task<bool> DeletePost(int id);
-
+ Task<Post> GetPostById(int id);
         // Get posts by condition (using an expression, e.g., category filter)
         Task<ICollection<PostDTO>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition);
     }

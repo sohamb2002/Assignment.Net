@@ -60,7 +60,11 @@ public async Task<User> AddUser(UserDTO user)
 
         public async Task<User> GetUserById(int id)
     {
-        return await _userRepo.GetByIdAsync(id);
+         Console.WriteLine($"Fetching user with ID: {id}");
+    var user = await _userRepo.GetSingleAsync(u => u.Id == id);
+    Console.WriteLine($"Fetched user: {user?.Name ?? "not found"}");
+    return user;
+        // return await _userRepo.GetByIdAsync(id);
     }
 
 public async Task<User> UpdateUser(int id, UpdateUserDTO user)
@@ -88,6 +92,7 @@ public async Task<User> UpdateUser(int id, UpdateUserDTO user)
     existingUser.Password = user.Password ?? existingUser.Password;
     existingUser.Email = user.Email ?? existingUser.Email;
     existingUser.Phone = user.Phone ?? existingUser.Phone;
+    existingUser.IsActive=user.IsActive??existingUser.IsActive;
 
     // Save changes to the database
     await _userRepo.UpdateAsync(existingUser);
@@ -107,10 +112,10 @@ user.IsActive=false;
             return true;
         }
 
-        public async Task<UserDTO> GetUserByConditionAsync(Expression<Func<User, bool>> condition)
+        public async Task<ICollection<UserDTO>> GetUsersByConditionAsync(Expression<Func<User, bool>> condition)
         {
-            var user = await _userRepo.GetSingleAsync(condition);
-            return _mapper.Map<UserDTO>(user);
+            var posts = await _userRepo.GetAllByConditionAsync(condition); // Fetch posts by condition
+            return _mapper.Map<ICollection<UserDTO>>(posts); // Map and return the result
         }
     }
 }

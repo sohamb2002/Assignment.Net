@@ -11,6 +11,7 @@ namespace MyApp.BAL.IServices
     {
         // Get all users
         Task<ICollection<UserDTO>> GetAllUsersAsync();
+      
 
  Task<User> UpdateUser(int id, UpdateUserDTO user);
     Task<User> GetUserById(int id);
@@ -24,7 +25,7 @@ namespace MyApp.BAL.IServices
         Task<bool> DeleteUser(int id);
 
         // Get a user by condition
-        Task<UserDTO> GetUserByConditionAsync(Expression<Func<User, bool>> condition);
+         Task<ICollection<UserDTO>> GetUsersByConditionAsync(Expression<Func<User, bool>> condition);
 
         // Authenticate user (Login)
     }

@@ -20,5 +20,6 @@ public int Id { get; set; }
         // Phone field validation with a length restriction
         [StringLength(15, ErrorMessage = "Phone number can't be longer than 15 characters.")]
         public string Phone { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

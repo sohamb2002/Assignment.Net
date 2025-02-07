@@ -23,7 +23,7 @@ Task<T> UpdateAsync(T entity);
         Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> condition);
         Task<T> GetSingleAsync(Expression<Func<T, bool>> condition);
         Task<List<T>> GetMultipleAsync(Expression<Func<T, bool>> condition);
-
+Task<ICollection<T>> GetAllWithoutCondition();
         // Execution Strategy (for handling DB retries)
         IExecutionStrategy GetExecutionStrategy();
 

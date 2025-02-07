@@ -15,6 +15,14 @@ namespace MyApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()); // ADD THIS
+});
 
             // DBContext
             builder.Services.AddDbContext<AssignmentNetContext>(options =>
@@ -42,7 +50,7 @@ namespace MyApp
             
 
             var app = builder.Build();
-
+app.UseCors("AllowAngular");
            
 
             app.UseHttpsRedirection();
@@ -56,8 +64,14 @@ namespace MyApp
     {
         public MappingConfig()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<Post, PostDTO>().ReverseMap();
+              CreateMap<User, UserDTO>().ReverseMap(); // Maps from User to UserDTO and vice versa
+        
+        // Mapping for Update
+        CreateMap<UpdateUserDTO, User>(); // Maps from UpdateUserDTO to User (no ReverseMap since you're not mapping back)
+        
+        // Similarly, if you have Post and UpdatePostDTO
+        CreateMap<Post, PostDTO>().ReverseMap(); // Maps from Post to PostDTO and vice versa
+        CreateMap<EditPostDTO, Post>(); // Maps from UpdatePostDTO to Post
         }
     }
 }

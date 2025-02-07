@@ -47,6 +47,35 @@ namespace MyApp.Controllers
             return response;
         }
 
+    [HttpGet("fetchActiveUsers")]
+        public async Task<ApiResponse<ICollection<UserDTO>>> GetActiveUsers()
+        {
+            var response = new ApiResponse<ICollection<UserDTO>>();
+            try
+            {
+                // Fetch data from the service layer
+                var users = await _uservice.GetUsersByConditionAsync(u=>u.IsActive==true);
+
+                response.Data = users;
+                response.StatusCode = 200;
+                response.Message = "Users fetched successfully.";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (add logging if necessary)
+                response.StatusCode = 500; // Internal Server Error
+                response.Message = "An error occurred while fetching users.";
+                response.Success = false;
+                response.Errors = new List<string> { ex.Message };
+            }
+
+            return response;
+        }
+
+
+
+
 [HttpPost("CreateUser")]
 public async Task<ApiResponse<User>> CreateUser([FromBody] UserDTO user)
 {
@@ -135,6 +164,40 @@ public async Task<ApiResponse<User>> UpdateUser([FromRoute] int id, [FromBody] U
     return response;
 }
     
+[HttpGet("GetUserById/{id}")]
+public async Task<ApiResponse<User>> GetUserById([FromRoute] int id)
+{
+    var response = new ApiResponse<User>();
+    try
+    {
+        // Fetch data from the service layer
+        var user = await _uservice.GetUserById(id);
+
+        if (user == null)
+        {
+            response.StatusCode = 404;  // Not Found
+            response.Message = "User not found.";
+            response.Success = false;
+        }
+        else
+        {
+            response.Data = user;
+            response.StatusCode = 200;  // OK
+            response.Message = "User fetched successfully.";
+            response.Success = true;
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log the exception (add logging if necessary)
+        response.StatusCode = 500;  // Internal Server Error
+        response.Message = "An error occurred while fetching the user.";
+        response.Success = false;
+        response.Errors = new List<string> { ex.Message };
+    }
+
+    return response;
+}
 
 [HttpPut("DeleteUser/{id}")]
 public async Task<ApiResponse<User>> DeleteUser([FromRoute] int id)
