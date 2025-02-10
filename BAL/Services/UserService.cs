@@ -23,10 +23,10 @@ namespace MyApp.BAL.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<UserDTO>> GetAllUsersAsync()
+        public async Task<ICollection<User>> GetAllUsersAsync()
         {
             var users = await _userRepo.GetAllAsync();
-            return _mapper.Map<ICollection<UserDTO>>(users);
+            return users;
         }
 
 public async Task<User> AddUser(UserDTO user)
@@ -106,7 +106,7 @@ public async Task<User> UpdateUser(int id, UpdateUserDTO user)
         {
             var user = await _userRepo.GetSingleAsync(u => u.Id == id);
             if (user == null) return false;
-user.IsActive=false;
+user.IsDeleted=true;
             _userRepo.SoftDelete(user);
             await _userRepo.SaveChangesAsync();
             return true;

@@ -10,7 +10,7 @@ namespace MyApp.BAL.IServices
     public interface IPostService
     {
         // Get all posts
-        Task<ICollection<PostDTO>> GetAllPosts();
+        Task<ICollection<Post>> GetAllPosts();
 
         // Add a new post
         Task<Post> AddPost(PostDTO postDTO);
@@ -22,6 +22,6 @@ namespace MyApp.BAL.IServices
         Task<bool> DeletePost(int id);
  Task<Post> GetPostById(int id);
         // Get posts by condition (using an expression, e.g., category filter)
-        Task<ICollection<PostDTO>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition);
+        Task<ICollection<Post>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition);
     }
 }

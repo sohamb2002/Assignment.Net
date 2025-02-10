@@ -31,4 +31,10 @@ public partial class Post
 
     [Column("is_published")]
     public bool? IsPublished { get; set; }
+
+    [Column("is_deleted")]
+    public bool? IsDeleted { get; set; }
+
+    [Column("updated_at", TypeName = "timestamp without time zone")]
+    public DateTime? UpdatedAt { get; set; }
 }

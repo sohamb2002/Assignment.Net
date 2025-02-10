@@ -22,9 +22,9 @@ namespace MyApp.Controllers
 
         // Fetch all posts
         [HttpGet("FetchAllPosts")]
-        public async Task<ApiResponse<ICollection<PostDTO>>> GetAllPosts()
+        public async Task<ApiResponse<ICollection<Post>>> GetAllPosts()
         {
-            var response = new ApiResponse<ICollection<PostDTO>>();
+            var response = new ApiResponse<ICollection<Post>>();
             try
             {
                 // Fetch data from the service layer
@@ -49,9 +49,9 @@ namespace MyApp.Controllers
 
         // Fetch posts by category ID
         [HttpGet("FetchPost/{cat_id}")]
-        public async Task<ApiResponse<ICollection<PostDTO>>> GetPostsByCategoryId(int cat_id)
+        public async Task<ApiResponse<ICollection<Post>>> GetPostsByCategoryId(int cat_id)
         {
-            var response = new ApiResponse<ICollection<PostDTO>>();
+            var response = new ApiResponse<ICollection<Post>>();
             try
             {
                 // Fetch posts by category condition
@@ -158,9 +158,9 @@ public async Task<ApiResponse<Post>> UpdatePost( [FromRoute]int id, [FromBody] E
 }
  //GetPostsByConditionAsync   
      [HttpGet("FetchPublishedPosts")]
-        public async Task<ApiResponse<ICollection<PostDTO>>> GetPublishedPosts()
+        public async Task<ApiResponse<ICollection<Post>>> GetPublishedPosts()
         {
-            var response = new ApiResponse<ICollection<PostDTO>>();
+            var response = new ApiResponse<ICollection<Post>>();
             try
             {
                 // Fetch posts by category condition
@@ -191,9 +191,9 @@ public async Task<ApiResponse<Post>> UpdatePost( [FromRoute]int id, [FromBody] E
         }
 
 [HttpGet("FetchPublishedPost/{id}")]
-        public async Task<ApiResponse<ICollection<PostDTO>>> GetPublishedPostbyId([FromRoute] int id)
+        public async Task<ApiResponse<ICollection<Post>>> GetPublishedPostbyId([FromRoute] int id)
         {
-            var response = new ApiResponse<ICollection<PostDTO>>();
+            var response = new ApiResponse<ICollection<Post>>();
             try
             {
                 // Fetch posts by category condition

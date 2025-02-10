@@ -22,9 +22,9 @@ namespace MyApp.Controllers
         }
 
         [HttpGet("FetchAllUsers")]
-        public async Task<ApiResponse<ICollection<UserDTO>>> GetUsers()
+        public async Task<ApiResponse<ICollection<User>>> GetUsers()
         {
-            var response = new ApiResponse<ICollection<UserDTO>>();
+            var response = new ApiResponse<ICollection<User>>();
             try
             {
                 // Fetch data from the service layer

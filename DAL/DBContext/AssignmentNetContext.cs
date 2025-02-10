@@ -36,7 +36,7 @@ public partial class AssignmentNetContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("posts_pkey");
 
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.IsPublished).HasDefaultValue(true);
         });
 
@@ -46,6 +46,7 @@ public partial class AssignmentNetContext : DbContext
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
         });
 
         OnModelCreatingPartial(modelBuilder);

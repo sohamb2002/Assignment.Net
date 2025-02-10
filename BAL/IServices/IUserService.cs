@@ -10,7 +10,7 @@ namespace MyApp.BAL.IServices
     public interface IUserService
     {
         // Get all users
-        Task<ICollection<UserDTO>> GetAllUsersAsync();
+        Task<ICollection<User>> GetAllUsersAsync();
       
 
  Task<User> UpdateUser(int id, UpdateUserDTO user);

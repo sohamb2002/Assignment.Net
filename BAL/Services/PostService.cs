@@ -21,10 +21,10 @@ namespace MyApp.BAL.Services
         }
 
         // Get all published posts
-        public async Task<ICollection<PostDTO>> GetAllPosts()
+        public async Task<ICollection<Post>> GetAllPosts()
         {
             var posts = await _postRepo.GetAllAsync();
-            return _mapper.Map<ICollection<PostDTO>>(posts);
+            return _mapper.Map<ICollection<Post>>(posts);
         }
      public async Task<Post> GetPostById(int id)
     {
@@ -85,17 +85,17 @@ namespace MyApp.BAL.Services
         {
                    var post = await _postRepo.GetSingleAsync(u => u.Id == id);
             if (post == null) return false;
-                post.IsPublished=false;
+                post.IsDeleted=true;
             _postRepo.SoftDelete(post);
             await _postRepo.SaveChangesAsync();
             return true;
         }
 
         // Get posts by condition
-        public async Task<ICollection<PostDTO>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition)
+        public async Task<ICollection<Post>> GetPostsByConditionAsync(Expression<Func<Post, bool>> condition)
         {
             var posts = await _postRepo.GetAllByConditionAsync(condition); // Fetch posts by condition
-            return _mapper.Map<ICollection<PostDTO>>(posts); // Map and return the result
+            return _mapper.Map<ICollection<Post>>(posts); // Map and return the result
         }
     }
 }
