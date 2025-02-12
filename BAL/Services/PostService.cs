@@ -55,6 +55,11 @@ namespace MyApp.BAL.Services
                 throw new Exception("An error occurred while adding the post.", ex);
             }
         }
+public async Task<ICollection<Post>> GetPostsByUserId(int userId)
+{
+    var posts = await _postRepo.GetAllByConditionAsync(p => p.CreatedBy == userId && p.IsDeleted == false);
+    return _mapper.Map<ICollection<Post>>(posts);
+}
 
         // Update an existing post
         public async Task<Post> UpdatePost(int id, EditPostDTO postDto)

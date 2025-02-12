@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using MyApp.DAL.Entity;
 using MyApp.DAL.Entity.DTO;
 using System;
@@ -11,7 +12,7 @@ namespace MyApp.BAL.IServices
     {
         // Get all users
         Task<ICollection<User>> GetAllUsersAsync();
-      
+      Task<User> GetUserByEmailAsync(string email);
 
  Task<User> UpdateUser(int id, UpdateUserDTO user);
     Task<User> GetUserById(int id);

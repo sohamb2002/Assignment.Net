@@ -46,7 +46,19 @@ namespace MyApp.Controllers
 
             return response;
         }
+ [HttpGet("User/{userId}")]
+        public async Task<IActionResult> GetPostsByUserId(int userId)
+        {
+            var posts = await _postService.GetPostsByUserId(userId);
+            
+            if (posts == null || posts.Count == 0)
+            {
+                return NotFound(new { message = "No posts found for this user." });
+            }
 
+            return Ok(posts);
+        }
+    
         // Fetch posts by category ID
         [HttpGet("FetchPost/{cat_id}")]
         public async Task<ApiResponse<ICollection<Post>>> GetPostsByCategoryId(int cat_id)

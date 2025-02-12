@@ -70,7 +70,7 @@ public async Task<User> AddUser(UserDTO user)
 public async Task<User> UpdateUser(int id, UpdateUserDTO user)
 {
     // Fetch the user from the database
-    var existingUser = await _userRepo.GetSingleAsync(u => u.Id == id);;
+    var existingUser = await _userRepo.GetSingleAsync(u => u.Id == id);
 
     if (existingUser == null)
     {
@@ -80,25 +80,31 @@ public async Task<User> UpdateUser(int id, UpdateUserDTO user)
     // Check if the new email is already taken by another user
     if (!string.IsNullOrEmpty(user.Email) && user.Email != existingUser.Email)
     {
-        var emailExists = await _userRepo.GetSingleAsync(u => u.Email == user.Email); // Compare with the new email
+        var emailExists = await _userRepo.GetSingleAsync(u => u.Email == user.Email);
         if (emailExists != null)
         {
             return null; // Email is already in use
         }
     }
 
-    // Only update the fields passed in the UserDTO
+    // Only update the fields if they are provided in the UserDTO
     existingUser.Name = user.Name ?? existingUser.Name;
-    existingUser.Password = user.Password ?? existingUser.Password;
     existingUser.Email = user.Email ?? existingUser.Email;
     existingUser.Phone = user.Phone ?? existingUser.Phone;
-    existingUser.IsActive=user.IsActive??existingUser.IsActive;
+    existingUser.IsActive = user.IsActive ?? existingUser.IsActive;
+
+    // ✅ Only update password if it's provided
+    if (!string.IsNullOrEmpty(user.Password))
+    {
+        existingUser.Password = user.Password;  // Consider hashing it before saving
+    }
 
     // Save changes to the database
     await _userRepo.UpdateAsync(existingUser);
 
     return existingUser;
 }
+
 
 
 
@@ -117,5 +123,18 @@ user.IsDeleted=true;
             var posts = await _userRepo.GetAllByConditionAsync(condition); // Fetch posts by condition
             return _mapper.Map<ICollection<UserDTO>>(posts); // Map and return the result
         }
+public async Task<User> GetUserByEmailAsync(string email)
+{
+    if (string.IsNullOrEmpty(email))
+    {
+        throw new ArgumentException("Email cannot be empty", nameof(email));
+    }
+
+    var user = await _userRepo.GetSingleAsync(u => u.Email == email);
+
+    return user;
+}
+
+
     }
 }

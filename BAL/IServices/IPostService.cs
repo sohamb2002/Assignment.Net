@@ -17,7 +17,7 @@ namespace MyApp.BAL.IServices
 
         // Update an existing post
          Task<Post> UpdatePost(int id, EditPostDTO post);
-
+Task<ICollection<Post>> GetPostsByUserId(int userId);
         // Delete a post
         Task<bool> DeletePost(int id);
  Task<Post> GetPostById(int id);

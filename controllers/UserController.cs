@@ -21,31 +21,62 @@ namespace MyApp.Controllers
             _uservice = service;
         }
 
-        [HttpGet("FetchAllUsers")]
-        public async Task<ApiResponse<ICollection<User>>> GetUsers()
+       [HttpGet("FetchAllUsers")]
+public async Task<ApiResponse<ICollection<User>>> GetUsers([FromQuery] string search = "", [FromQuery] string filter = "")
+{
+    var response = new ApiResponse<ICollection<User>>();
+    try
+    {
+        // Fetch data from the service layer
+        var users = await _uservice.GetAllUsersAsync();
+
+        // Apply search filter
+        if (!string.IsNullOrEmpty(search))
         {
-            var response = new ApiResponse<ICollection<User>>();
-            try
-            {
-                // Fetch data from the service layer
-                var users = await _uservice.GetAllUsersAsync();
-
-                response.Data = users;
-                response.StatusCode = 200;
-                response.Message = "Users fetched successfully.";
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (add logging if necessary)
-                response.StatusCode = 500; // Internal Server Error
-                response.Message = "An error occurred while fetching users.";
-                response.Success = false;
-                response.Errors = new List<string> { ex.Message };
-            }
-
-            return response;
+            users = users.Where(u => u.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || 
+                                     u.Email.Contains(search, StringComparison.OrdinalIgnoreCase))
+                         .ToList();
         }
+
+        // Apply status filter
+        switch (filter.ToLower())
+        {
+            case "a":
+                users = users.Where(u => (bool)u.IsActive).ToList();
+                break;
+            case "i":
+                users = users.Where(u => (bool)!u.IsActive).ToList();
+                break;
+            // No filter applied if filter is empty or invalid
+        }
+
+        response.Data = users;
+        response.StatusCode = 200;
+        response.Message = "Users fetched successfully.";
+        response.Success = true;
+    }
+    catch (Exception ex)
+    {
+        // Log the exception (add logging if necessary)
+        response.StatusCode = 500; // Internal Server Error
+        response.Message = "An error occurred while fetching users.";
+        response.Success = false;
+        response.Errors = new List<string> { ex.Message };
+    }
+
+    return response;
+}
+[HttpGet("email/{email}")]
+public async Task<IActionResult> GetUserByEmail(string email)
+{
+    var user = await _uservice.GetUserByEmailAsync(email);
+    if (user == null)
+    {
+        return NotFound(new { message = "User not found" });
+    }
+
+    return Ok(user);
+}
 
     [HttpGet("fetchActiveUsers")]
         public async Task<ApiResponse<ICollection<UserDTO>>> GetActiveUsers()
